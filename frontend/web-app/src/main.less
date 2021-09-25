@@ -1,0 +1,132 @@
+@main-color: rgb(34, 101, 117);
+@main-text-color: rgb(36, 35, 35);
+@light-text-color: rgb(231, 231, 231);
+
+@media screen and (max-width: 600px) {
+    body {
+        padding: 0;
+        margin: 0;
+        
+    }
+
+    header {
+        height: 5rem;
+        background-image: url('assets/bg.png');
+        background-color: @main-color;
+    }
+
+    .nav {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .nav-item {
+            margin: 1rem;
+
+            img {
+                width: 2.3rem;
+                height: 2.3rem;
+            }
+        }
+
+        .nav-item:first-child, .nav-item:last-child {
+
+            img {
+                width: 1.9rem;
+                height: 1.9rem;
+            }
+        }
+    }
+
+    .homepage {
+        
+        text-align: center;
+        margin-bottom: 1rem;
+        font-family: "Poppins", sans-serif;
+        
+        p:first-child {
+            font-size: 24px;
+            margin-bottom: 0;
+        }
+
+        .main {
+            position: relative;
+            width: 100%;
+            height: 31rem;
+            background:url('assets/bg home.jpg') no-repeat;
+            object-fit: fill;
+        
+            .futter {
+                position: absolute;
+                background-color: @main-color;
+                width: 100%;
+                height: 5rem;
+                top: 26rem;
+
+                img {
+                    width: 1.5rem;
+                    height: 1.5rem;
+                }
+            }
+        }
+        
+    }
+
+    .office-page {
+        position: relative;
+    }
+// кнопки
+    .btn {
+        position: absolute;
+        background-color: @main-color;
+        border-radius: 1rem;
+        border: none;
+        text-align: center;
+        display: inline-block;
+        font-size: 16px;
+        opacity: 65%;
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+        a {
+            text-decoration: none;
+            color: @light-text-color;
+        }
+    }
+
+    .btn-tg {
+        left: 2.5rem;
+        top: 8rem;
+        padding: 1rem 6rem;
+    }
+
+    .btn-login, 
+    .btn-logout {
+        left: 17rem;
+        top: 1rem;
+        padding: 1rem 1rem;
+    }
+// 
+// для визуала триугольничка
+    .triangle {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border: 20px solid;
+        border-color: transparent transparent white transparent;
+        top: 2.6rem;
+    }
+
+    .hpage {
+        left: 4.4rem;
+    }
+
+    .wpage {
+        left: 8.4rem;
+    }
+
+    .opage {
+        left: 12.4rem;
+    }
+// 
+}
+

@@ -1,15 +1,21 @@
-from rest_framework import status
+from rest_framework import status, viewsets
 from rest_framework.response import Response
-from rest_framework.views import APIView
-from .serializers import RegistrationSerializer
+from .serializers import RegistrationSerializer, SubscriberSerializer
 from django.contrib.auth.models import User
+from .models import Subscriber
+from rest_framework.permissions import IsAdminUser
 
-class RegistrationAPIView(APIView):
+
+
+class RegistrationViewSet(viewsets.ModelViewSet):
 
     serializer_class = RegistrationSerializer
+    queryset = User.objects.all()
+    permission_classes = [IsAdminUser]
 
-    def post(self, request):
-        user = RegistrationSerializer.create_user(username=request.data.get['username'], password=request.data.get['password'])
-        user.save()
-        
-        return Response({"status": "success", "response": "User Successfully Created"}, status=status.HTTP_201_CREATED)
+
+class UsersViewSet(viewsets.ModelViewSet):
+
+    serializer_class = SubscriberSerializer
+    queryset = Subscriber.objects.all()
+    permission_classes = [IsAdminUser]

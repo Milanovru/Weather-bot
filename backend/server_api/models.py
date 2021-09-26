@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.utils import timezone
 
 
 class Location(models.Model):
@@ -77,3 +79,46 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+#  Переопределение класса User
+class AccountManager(BaseUserManager):
+
+    def create_user(self, username, password, **kwargs):
+        if username is None:
+            raise ValueError("Username don't must empty")
+        user = self.model(username=username, **kwargs)
+        user.set_password(password)
+        user.save()
+        return user
+
+    def create_superuser(self, username, password, **kwargs):
+
+        kwargs.setdefault('is_staff', True)
+        kwargs.setdefault('is_superuser', True)
+        kwargs.setdefault('is_active', True)
+
+        user = self.create_user(username=username, password=password, **kwargs)
+        return user
+
+
+class Account(AbstractBaseUser, PermissionsMixin):
+    id = models.AutoField(primary_key=True)
+    username = models.CharField('login', max_length=20, unique=True)
+    email = models.EmailField('email' ,max_length=255, unique=True, blank=True, null=True)
+    phone = models.CharField('phone', max_length=10, blank=True, null=True, unique=True)
+    last_time_visit = models.DateTimeField(default=timezone.now)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+
+    objects = AccountManager()
+
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = []
+
+    def __str__(self):
+        return self.username
+
+    class Meta:
+        verbose_name = 'Аккаунт'
+        verbose_name_plural = 'Аккаунты'
+#

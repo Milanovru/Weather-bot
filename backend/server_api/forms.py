@@ -7,7 +7,7 @@ class AccountCreationForm(UserCreationForm):
     class Meta(UserCreationForm):
 
         model = Account
-        fields = ('username',)
+        fields = ('username', 'email', 'phone')
 
 
 class AccountChangeForm(UserChangeForm):
@@ -15,4 +15,4 @@ class AccountChangeForm(UserChangeForm):
     class Meta:
 
         model = Account
-        fields = ('username',)
+        fields = ('username', 'email', 'phone')

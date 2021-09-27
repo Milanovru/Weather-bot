@@ -33,17 +33,17 @@ class AccountAdmin(UserAdmin):
     add_form = AccountCreationForm
     form = AccountChangeForm
     model = Account
-    list_display = ('id','username', 'is_staff', 'is_active',)
+    list_display = ('id','username',  'email', 'phone', 'last_time_visit', 'is_active',)
     list_filter = ('is_staff', 'is_active',)
     fieldsets = (
-        (None, {'fields': ('username', 'password')}),
+        ('User information', {'fields': ('username', 'email', 'phone', 'password')}),
         ('Permissions', {'fields': ('is_staff', 'is_active')}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'password1', 'password2', 'is_staff', 'is_active')}
+            'fields': ('username', 'email', 'phone', 'password1', 'password2', 'is_staff', 'is_active')}
         ),
     )
     search_fields = ('username',)
-    ordering = ('username',)
+    ordering = ('last_time_visit',)

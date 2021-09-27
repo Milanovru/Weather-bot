@@ -83,10 +83,10 @@ class Post(models.Model):
 #  Переопределение класса User
 class AccountManager(BaseUserManager):
 
-    def create_user(self, username, password, **kwargs):
+    def create_user(self, username, password, email=None, phone=None, **kwargs):
         if username is None:
             raise ValueError("Username don't must empty")
-        user = self.model(username=username, **kwargs)
+        user = self.model(username=username, email=email, phone=phone, **kwargs)
         user.set_password(password)
         user.save()
         return user

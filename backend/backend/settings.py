@@ -24,7 +24,6 @@ INSTALLED_APPS = [
     'corsheaders', 
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_framework_simplejwt',
     'djoser',
 ]
 
@@ -49,10 +48,6 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     )
-}
-
-SIMPLE_JWT = {
-    'AUTH_HEADER_TYPES': ('JWT',),
 }
 
 DJOSER = {

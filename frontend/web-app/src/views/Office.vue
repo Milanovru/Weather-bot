@@ -2,17 +2,21 @@
     <div id="office">
         <div class="triangle opage"></div>
         <article class="office-page">
-                <!-- {% if user.is_authenticated %}
-            hello, {{user.username}}! -->
-            <button class="btn btn-logout">
-                <a href="">Log out</a>
-            </button>
-        <!-- {% else %}
-            hello, guest! -->
-            <button class="btn btn-login">
-                <a href="">Log in</a>
+            <form action="">
+                <input v-model="account.username" placeholder="Введите логин" />
+                <input v-model="account.password" placeholder="Введите пароль" />
+                <button @click="create_account()">
+                    Submit
+                </button>                
+            </form>
+
+            <!-- <button class="btn btn-logout">
+                Log out
+            </button> -->
+
+            <button class="btn btn-login" @click="create_account">
+                Log in
             </button> 
-        <!-- {% endif %} -->
         </article>
         <section>
         </section>
@@ -21,7 +25,26 @@
 
 
 <script>
+
 export default {
-  name: 'Office',
+    name: 'Office',
+    data() {},
+    methods: {
+        create_account () {
+            let data = this.$store.getters.GET_ACCOUNT
+            console.log(data)
+            this.$store.dispatch("SET_ACCOUNT", data)
+        }
+    },
+    computed: {
+        account: {
+            get () {
+                return this.$store.state.account;
+            },
+            set (value) {
+                this.$store.commit('SET_ACCOUNT', value);
+            }
+        }
+    }
 }
 </script>

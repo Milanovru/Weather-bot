@@ -8,6 +8,7 @@ export default createStore({
       username: null,
       password: null,
     },
+    status: null
   },
   getters: {
     GET_ACCOUNT: state => {
@@ -19,12 +20,20 @@ export default createStore({
       state.account.username = account.username;
       state.account.password = account.password;
     },
+    SET_STATUS: (state, status) => {
+      state.status = status;
+    }
   },
   actions: {
-    SET_ACCOUNT: (context, account) => {
-      let responce = axios.post("http://localhost:8000/auth/users/", account)
-      console.log(responce.status)
-      context.commit('SET_ACCOUNT', account)   
+    SET_ACCOUNT: async (context, account) => {
+      await axios.post("http://localhost:8000/auth/users/", account).then(function (response) {
+        if (response.status == 201) {
+          context.commit('SET_ACCOUNT', account)
+          context.commit('SET_STATUS', response.statusText)
+        }
+      }).catch(function (error) {
+        console.log(error)
+      })  
     },
   },
   modules: {

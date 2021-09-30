@@ -62,7 +62,7 @@ export default createStore({
         if (response.status == 200) {
           let token = response.data.auth_token
           axios.get("http://localhost:8000/auth/users/me", {
-                headers: {"Authorization": "token " + response.data.auth_token},
+                headers: {"Authorization": "token " + token},
                 data: {
                     username: account.username,
                     password: account.password

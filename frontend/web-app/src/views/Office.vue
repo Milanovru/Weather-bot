@@ -1,25 +1,18 @@
 <template>
     <div id="office">
         <div class="triangle opage"></div>
-        <article class="office-page">
-            <form action="">
-                <input v-model="account.username" placeholder="Введите логин" />
-                <input v-model="account.password" placeholder="Введите пароль" />
-                <button @click="create_account()">
-                    Submit
-                </button>                
-            </form>
-
-            <!-- <button class="btn btn-logout">
-                Log out
-            </button> -->
-
-            <button class="btn btn-login" @click="create_account">
-                Log in
-            </button> 
+        <article class="officepage">
+            <router-link to="/accounts">
+                <button class="btn btn-login">
+                    Log in
+                </button>
+            </router-link>
+            <div class="officepage-main">
+                Здесь будет личный кабинет
+                <!-- <p>{{this.$store.getters.GET_USER}}</p> -->
+                <router-view />
+            </div>
         </article>
-        <section>
-        </section>
     </div>
 </template>
 
@@ -28,23 +21,20 @@
 
 export default {
     name: 'Office',
-    data() {},
-    methods: {
-        create_account () {
-            let data = this.$store.getters.GET_ACCOUNT
-            console.log(data)
-            this.$store.dispatch("SET_ACCOUNT", data)
+    data() {
+        return {
+            
         }
     },
-    computed: {
-        account: {
-            get () {
-                return this.$store.state.account;
-            },
-            set (value) {
-                this.$store.commit('SET_ACCOUNT', value);
-            }
-        }
-    }
+    components: {
+    },
+    methods: {
+
+    },
 }
 </script>
+
+<style lang="less">
+
+
+</style>

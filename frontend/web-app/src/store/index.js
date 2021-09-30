@@ -12,6 +12,8 @@ export default createStore({
     user: {
       id: null,
       username: null,
+      email: null,
+      phone: null,
       token: null,
     }
   },
@@ -23,7 +25,7 @@ export default createStore({
       return state.status
     },
     GET_USER: state => {
-      return state.user.token
+      return state.user
     },
   },
 
@@ -35,8 +37,12 @@ export default createStore({
     SET_STATUS: (state, status) => {
       state.status = 'пользователь ' + status + ' создан успешно!';
     },
-    SET_USER_TOKEN: (state, data) => {
-      state.user.token = data
+    SET_USER_INFO: (state, data) => {
+      state.user.id = data.id,
+      state.user.username = data.username,
+      state.user.email = data.email,
+      state.user.phone = data.phone,
+      state.user.token = data.token
     }
   },
 
@@ -53,12 +59,32 @@ export default createStore({
     },
     LOGIN: async (context, account) => {
       await axios.post("http://localhost:8000/auth/token/login/", account).then(function (response) {
-        console.log(response)
         if (response.status == 200) {
-          context.commit("SET_USER_TOKEN", response.data.auth_token)
+          let token = response.data.auth_token
+          axios.get("http://localhost:8000/auth/users/me", {
+                headers: {"Authorization": "token " + response.data.auth_token},
+                data: {
+                    username: account.username,
+                    password: account.password
+                }
+          }).then(function (response) {
+            let id = response.data.id;
+            let username = response.data.username;
+            let email = response.data.email;
+            let phone = response.data.phone;
+            context.commit('SET_USER_INFO', {
+              'id': id,
+              'username': username,
+              'email': email,
+              'phone': phone,
+              'token': token
+            })
+          }).catch(function (error) {
+            console.log(error)
+          })
         }
       })
-    }
+    },
   },
   modules: {
   }

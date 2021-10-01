@@ -1,8 +1,8 @@
 <template>
     <div class="form">
         <p>{{this.$store.getters.GET_STATUS}}</p>
-        <input v-model="account.username" placeholder="Введите логин" class="form-item item1"/>
-        <input v-model="account.password" placeholder="Введите пароль" class="form-item item1"/>
+        <input v-model.lazy="account.username" placeholder="Введите логин" class="form-item item1"/>
+        <input v-model.lazy="account.password" placeholder="Введите пароль" class="form-item item1"/>
         <button @click="login()">
             Submit
         </button>   
@@ -20,7 +20,6 @@ export default {
             this.$store.dispatch("LOGIN", data)
             setTimeout(this.redirect_to_office, 2000)
         },
-
         create_account () {
             let data = this.$store.getters.GET_ACCOUNT
             this.$store.dispatch("SET_ACCOUNT", data)

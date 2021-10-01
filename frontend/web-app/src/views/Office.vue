@@ -2,11 +2,11 @@
     <div id="office">
         <div class="triangle opage"></div>
         <article class="officepage">
-            <router-link to="/accounts">
-                <button class="btn btn-login" @click="check_authenticated()">
-                    {{button_label}}
+            
+                <button class="btn btn-login" @click="logout()">
+                    {{this.$store.getters.GET_BUTTON_LABEL}}
                 </button>
-            </router-link>
+            
             <div class="officepage-main">
                 Здесь будет личный кабинет
                 <router-view />
@@ -21,19 +21,19 @@
 export default {
     name: 'Office',
     data() {
-        return {
-            is_authenticated: false,
-            button_label: 'Log in',
-            
-        }
+        return {}
     },
     components: {
     },
     methods: {
-        check_authenticated (){
-            this.is_authenticated = true
-            this.button_label = 'Log out'
-        },
+        logout() {
+            if (this.$store.getters.GET_BUTTON_LABEL == 'Log out') {
+                let token = this.$store.state.user.token;
+                this.$store.dispatch("LOGOUT", token)
+            } else {
+                this.$router.push("/accounts")
+            }
+        }
     },
 }
 </script>

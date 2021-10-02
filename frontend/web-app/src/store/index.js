@@ -4,10 +4,6 @@ import axios from 'axios'
 
 export default createStore({
   state: {
-    account: {
-      username: null,
-      password: null,
-    },
     status: '',
     user: {
       id: null,
@@ -19,9 +15,6 @@ export default createStore({
     },
   },
   getters: {
-    GET_ACCOUNT: state => {
-      return state.account
-    },
     GET_STATUS: state => {
       return state.status
     },
@@ -32,12 +25,11 @@ export default createStore({
   },
 
   mutations: {
-    SET_ACCOUNT: (state, account) => {
-      state.account.username = account.username
-      state.account.password = account.password
-    },
     SET_STATUS: (state, status) => {
-      state.status = 'пользователь ' + status + ' создан успешно!';
+      state.status = status
+    },
+    SET_STATUS_DEFAULT: (state) => {
+      state.status = ''
     },
     SET_USER: (state, data) => {
       state.user.id = data.id
@@ -61,8 +53,7 @@ export default createStore({
     SET_ACCOUNT: async (context, account) => {
       await axios.post("http://localhost:8000/auth/users/", account).then(function (response) {
         if (response.status == 201) {
-          context.commit('SET_ACCOUNT', account)
-          context.commit('SET_STATUS', account.username)
+          context.commit('SET_STATUS', response.statusText)
         }
       }).catch(function (error) {
         console.log(error)
@@ -71,6 +62,7 @@ export default createStore({
     LOGIN: async (context, account) => {
       await axios.post("http://localhost:8000/auth/token/login", account).then(function (response) {
         if (response.status == 200) {
+          context.commit('SET_STATUS', response.statusText)
           let token = response.data.auth_token
           axios.get("http://localhost:8000/auth/users/me", {
                 headers: {"Authorization": "token " + token},
@@ -106,6 +98,7 @@ export default createStore({
       }).then(function (response) {
         if (response.status == 204) {
           context.commit('SET_USER_DEFAULT')
+          context.commit('SET_STATUS_DEFAULT')
           }}).catch(function (error) {
         console.log(error)
       })

@@ -1,7 +1,7 @@
 <template>
     <div class="form">
         <p>{{this.$store.getters.GET_STATUS}}</p>
-        <input v-model.lazy="account.username" placeholder="Введите логин" class="form-item item1"/>
+        <input v-model.lazy="account.username" type='text' placeholder="Введите логин" class="form-item item1"/>
         <input v-model.lazy="account.password" type='password' placeholder="Введите пароль" class="form-item item1"/>
         <button @click="login()">
             Submit
@@ -14,31 +14,37 @@
 
 <script>
 export default {
+    data () {
+        return {
+            account: {
+                username: null,
+                password: null,
+            },
+            label: null,
+        }
+    },
     methods: {
         login () {
-            let data = this.$store.getters.GET_ACCOUNT
-            this.$store.dispatch("LOGIN", data)
+            this.$store.dispatch("LOGIN", this.account)
+            this.clear_input()
             setTimeout(this.redirect_to_office, 2000)
         },
         create_account () {
-            let data = this.$store.getters.GET_ACCOUNT
-            this.$store.dispatch("SET_ACCOUNT", data)
+            this.$store.dispatch("SET_ACCOUNT", this.account)
         },
         redirect_to_office () {
             this.$router.push('/office')
-        }
-    },
-    computed: {
-        account: {
-            get () {
-                return this.$store.state.account;
-            },
-            set (value) {
-                this.$store.commit('SET_ACCOUNT', value);
+        },
+        set_text_label () {
+            if (this.$store.getters.GET_STATUS) {
+
             }
-        }
-    }
-    
+        },
+        clear_input () {
+            this.account.username = null
+            this.account.password = null
+        },
+    }    
 }
 </script>
 

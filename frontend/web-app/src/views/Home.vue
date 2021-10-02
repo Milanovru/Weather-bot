@@ -24,3 +24,7 @@ export default {
   name: 'Home',
 }
 </script>
+
+<style lang="less">
+
+</style>

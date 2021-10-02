@@ -6,11 +6,13 @@
                 {{user.is_active ? 'Log out' : 'Log in'}}
             </button>
             <h2>Личный кабинет</h2>
+            <p>Добро пожаловать, {{user.username ? user.username : 'гость'}}!</p>
+            <hr>
         </article>
         <section>
             <router-view />
             <!-- для теста -->
-            <p>привет, {{user.username ? user.username : 'гость'}}</p>
+            
         </section>
     </div>
 </template>
@@ -40,6 +42,5 @@ export default {
 </script>
 
 <style lang="less">
-
 
 </style>

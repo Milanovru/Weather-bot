@@ -2,7 +2,7 @@
   <div id="work">
     <div class="triangle wpage"></div>
     <article>
-        <h2>Work</h2>
+        <h2>О проекте</h2>
     <p>
         Phasellus enim sapien, blandit ullamcorper elementum eu, condimentum eu elit.
         Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia

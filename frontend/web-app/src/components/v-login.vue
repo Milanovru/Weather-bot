@@ -1,12 +1,25 @@
 <template>
     <div class="form">
-        <p>{{this.$store.getters.GET_STATUS}}</p>
-        <input v-model.lazy="account.username" type='text' placeholder="Введите логин" class="form-item item1"/>
-        <input v-model.lazy="account.password" type='password' placeholder="Введите пароль" class="form-item item1"/>
-        <button @click="login()">
+        <label>{{this.$store.getters.GET_STATUS}}</label>
+        <input 
+            v-model.lazy="account.username" 
+            type='text' 
+            placeholder="Введите логин" 
+            class="form-item item1" 
+            :class="{alert: isAlert}"
+            @click="hidden_alert()"
+            />
+        <input v-model.lazy="account.password" 
+            type='password' 
+            placeholder="Введите пароль" 
+            class="form-item item1" 
+            :class="{alert: isAlert}"
+            @click="hidden_alert()"
+        />
+        <button @click="login()" class="btn btn-submit">
             Submit
         </button>   
-        <button @click="create_account()">
+        <button @click="create_account()" class="btn btn-register">
             Registtation
         </button>             
     </div>
@@ -21,16 +34,25 @@ export default {
                 password: null,
             },
             label: null,
+            isAlert: false,
         }
     },
     methods: {
         login () {
-            this.$store.dispatch("LOGIN", this.account)
-            this.clear_input()
-            setTimeout(this.redirect_to_office, 2000)
+            if (this.account.username == null || this.account.password == null) {
+                this.display_alert()
+            } else {
+                this.$store.dispatch("LOGIN", this.account)
+                this.clear_input()
+                setTimeout(this.redirect_to_office, 2000)
+            }
         },
         create_account () {
-            this.$store.dispatch("SET_ACCOUNT", this.account)
+            if (this.account.username == null || this.account.password == null) {
+                this.display_alert()
+            } else {
+                this.$store.dispatch("SET_ACCOUNT", this.account)
+            }
         },
         redirect_to_office () {
             this.$router.push('/office')
@@ -44,24 +66,24 @@ export default {
             this.account.username = null
             this.account.password = null
         },
+        display_alert () {
+            this.$store.commit('SET_STATUS', 'Поля логина и пароля не могут быть пустыми!')
+            this.isAlert = true
+        },
+        hidden_alert () {
+            this.$store.commit('SET_STATUS_DEFAULT')
+            this.isAlert = false
+        }
     }    
 }
 </script>
 
 <style lang="less">
 
-.form {
-    position: absolute;
-    top: 6rem;
-    left: 3rem;
-    display: grid;
-    gap: 1rem;
-
-    .item1, .item2 {
-        width: 16rem;
-        height: 1.7rem;
-    }
-
-} 
+.alert {
+    outline: none !important;
+    border: 3px solid rgb(211, 43, 43);
+    border-radius: 3px;
+}
   
 </style>

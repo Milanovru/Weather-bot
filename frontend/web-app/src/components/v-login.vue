@@ -2,7 +2,7 @@
     <div class="form">
         <p>{{this.$store.getters.GET_STATUS}}</p>
         <input v-model.lazy="account.username" placeholder="Введите логин" class="form-item item1"/>
-        <input v-model.lazy="account.password" placeholder="Введите пароль" class="form-item item1"/>
+        <input v-model.lazy="account.password" type='password' placeholder="Введите пароль" class="form-item item1"/>
         <button @click="login()">
             Submit
         </button>   

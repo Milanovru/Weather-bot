@@ -9,14 +9,14 @@ export default createStore({
       password: null,
     },
     status: '',
-    button_label: 'Log in',
     user: {
       id: null,
       username: null,
       email: null,
       phone: null,
       token: null,
-    }
+      is_active: false,
+    },
   },
   getters: {
     GET_ACCOUNT: state => {
@@ -28,38 +28,35 @@ export default createStore({
     GET_USER: state => {
       return state.user
     },
-    GET_BUTTON_LABEL: state => {
-      return state.button_label
-    }
+ 
   },
 
   mutations: {
     SET_ACCOUNT: (state, account) => {
-      state.account.username = account.username;
-      state.account.password = account.password;
+      state.account.username = account.username
+      state.account.password = account.password
     },
     SET_STATUS: (state, status) => {
       state.status = 'пользователь ' + status + ' создан успешно!';
     },
     SET_USER: (state, data) => {
-      state.user.id = data.id,
-      state.user.username = data.username,
-      state.user.email = data.email,
-      state.user.phone = data.phone,
+      state.user.id = data.id
+      state.user.username = data.username
+      state.user.email = data.email
+      state.user.phone = data.phone
       state.user.token = data.token
+      state.user.is_active = data.is_active
     },
     SET_USER_DEFAULT: (state) => {
-      state.user.id = null,
-      state.user.username = null,
-      state.user.email = null,
-      state.user.phone = null,
+      state.user.id = null
+      state.user.username = null
+      state.user.email = null
+      state.user.phone = null
       state.user.token = null
+      state.user.is_active = false
     },
-    SET_BUTTON_LABEL: (state, label) => {
-      state.button_label = label
-    }
-  },
 
+  },
   actions: {
     SET_ACCOUNT: async (context, account) => {
       await axios.post("http://localhost:8000/auth/users/", account).then(function (response) {
@@ -91,9 +88,9 @@ export default createStore({
               'username': username,
               'email': email,
               'phone': phone,
-              'token': token
-            })
-            context.commit('SET_BUTTON_LABEL', 'Log out')
+              'token': token,
+              'is_active': true
+            });
           }).catch(function (error) {
             console.log(error)
           })
@@ -101,13 +98,13 @@ export default createStore({
       })
     },
     LOGOUT: async (context, token) => {
+      // c axios.post почему-то не работает
       await axios({
         method: 'POST',
         url: "http://localhost:8000/auth/token/logout",
         headers: {"Authorization": "token " + token}
       }).then(function (response) {
         if (response.status == 204) {
-          context.commit('SET_BUTTON_LABEL', 'Log in')
           context.commit('SET_USER_DEFAULT')
           }}).catch(function (error) {
         console.log(error)

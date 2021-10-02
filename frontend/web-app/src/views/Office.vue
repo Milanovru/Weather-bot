@@ -11,14 +11,16 @@
         </article>
         <section>
             <router-view />
-            <!-- для теста -->
-            
+            <vActive v-if="user.is_active"/>
+            <vUndo v-else />
         </section>
     </div>
 </template>
 
 
 <script>
+import vActive from '@/components/v-active.vue';
+import vUndo from '@/components/v-undoactive.vue';
 
 export default {
     name: 'Office',
@@ -28,6 +30,8 @@ export default {
         }
     },
     components: {
+        vActive,
+        vUndo
     },
     methods: {
         logout() {

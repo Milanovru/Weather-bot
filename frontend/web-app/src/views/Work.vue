@@ -1,16 +1,13 @@
 <template>
   <div id="work">
     <div class="triangle wpage"></div>
-    <article>
-        <h2>О проекте</h2>
-    <p>
-        Phasellus enim sapien, blandit ullamcorper elementum eu, condimentum eu elit.
-        Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia
-        luctus elit eget interdum.
-    </p>
+    <article class="workpage">
+      <h2>О проекте</h2>
+      <p>Здесь будут полезные статьи о работе сервиса</p>
+      <hr>
     </article>
     <section>
-        <div class="row">work</div>
+        
     </section>
   </div>
 </template>

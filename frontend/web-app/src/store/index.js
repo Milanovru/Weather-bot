@@ -53,7 +53,7 @@ export default createStore({
     SET_ACCOUNT: async (context, account) => {
       await axios.post("http://localhost:8000/auth/users/", account).then(function (response) {
         if (response.status == 201) {
-          context.commit('SET_STATUS', response.statusText)
+          context.commit('SET_STATUS', 'Аккаунт успешно создан!')
         }
       }).catch(function (error) {
         console.log(error)
@@ -62,7 +62,7 @@ export default createStore({
     LOGIN: async (context, account) => {
       await axios.post("http://localhost:8000/auth/token/login", account).then(function (response) {
         if (response.status == 200) {
-          context.commit('SET_STATUS', response.statusText)
+          context.commit('SET_STATUS', 'Перенаправление в личный кабинет...')
           let token = response.data.auth_token
           axios.get("http://localhost:8000/auth/users/me", {
                 headers: {"Authorization": "token " + token},

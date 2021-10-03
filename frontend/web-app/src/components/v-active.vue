@@ -1,6 +1,13 @@
 <template>
     <div class="auth-user">
-        <p>А это личный кабинет:)</p>
+        <p>Состояние аккаунта в MPWeatherbot</p>
+        <ul>
+            <li>Telegram-никнейм: null</li>
+            <li>Координаты: null</li>
+            <li>Адрес: null</li>
+            <li>Состояние подписок: null</li>
+        </ul>
+
     </div>
 </template>
 
@@ -15,5 +22,6 @@ export default {
 </script>
 
 <style lang="less">
+
 
 </style>

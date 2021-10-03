@@ -20,7 +20,7 @@
             Submit
         </button>   
         <button @click="create_account()" class="btn btn-register">
-            Registtation
+            Registration
         </button>             
     </div>
 </template>

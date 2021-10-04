@@ -8,7 +8,7 @@
       </div>
         <div class="main">    
           <button class="btn btn-tg">
-              <a href="">Join telegram</a>
+              <a href="https://t.me/MPWeatherbot" target="_blank">Join telegram</a>
           </button>
           <div class="futter">
             test text

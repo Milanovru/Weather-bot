@@ -43,8 +43,10 @@ def get_subscriber_keyboard():
     keyboard = InlineKeyboardMarkup(row_width=1)
     button1 = InlineKeyboardButton(text='Предупреждать об осадках', callback_data='alert_weather')
     # button2 = InlineKeyboardButton(text='Прогноз погоды по расписанию', callback_data='#')
+    button3 = InlineKeyboardButton(text='Личный кабинет', callback_data='#')
+    button4 = InlineKeyboardButton(text='Регистрация', callback_data='#')
     back_menu = InlineKeyboardButton(text='Назад', callback_data='back_menu')
-    return keyboard.add(button1, back_menu)
+    return keyboard.add(button1, button3, button4, back_menu)
 
 
 def get_change_keyboard():

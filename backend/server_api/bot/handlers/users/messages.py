@@ -23,7 +23,7 @@ async def get_keyboard(call: CallbackQuery):
 
 @dp.callback_query_handler(text='alert_menu')
 async def get_keyboard(call: CallbackQuery):
-    await call.answer('Меню подписок')
+    await call.answer('Меню дополнительных функций')
     await call.message.edit_reply_markup(reply_markup=get_subscriber_keyboard())
 
 

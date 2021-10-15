@@ -175,3 +175,9 @@ async def delete(call: CallbackQuery):
     await call.answer(cache_time=5)
     await delete_subscribe(call.from_user.id)
     await call.message.answer('Вы отписаны', reply_markup=get_menu_keyboard())
+
+
+@dp.callback_query_handler(text='registration-web')
+async def registration(call: CallbackQuery):
+    await call.answer(cache_time=5)
+    await call.message.answer(f'Логин для регистрации: {call.from_user.id}', reply_markup=get_menu_keyboard())

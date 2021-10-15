@@ -33,7 +33,7 @@ async def get_menu(message: Message):
 async def cmd_set_commands(message: Message):
     commands = [types.BotCommand(command="/menu", description="Главное меню"),
     types.BotCommand(command="/weather", description="Меню погоды"),
-    types.BotCommand(command='/functions', description='Меню подписок')
+    types.BotCommand(command='/functions', description='Меню функций')
     ]
     await bot.set_my_commands(commands)
     await message.answer('Изменения внесены')

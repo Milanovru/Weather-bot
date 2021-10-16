@@ -6,7 +6,7 @@
                 {{user.is_active ? 'Log out' : 'Log in'}}
             </button>
             <h2>Личный кабинет</h2>
-            <p>Добро пожаловать, {{user.username ? user.username : 'гость'}}!</p>
+            <p>Добро пожаловать, {{user.telegram_name ? user.telegram_name : 'гость'}}!</p>
             <hr>
         </article>
         <section>

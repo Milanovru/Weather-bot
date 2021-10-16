@@ -7,10 +7,13 @@ export default createStore({
     status: '',
     user: {
       id: null,
-      username: null,
+      telegram_id: null,
       email: null,
       phone: null,
       token: null,
+      telegram_name: null,
+      registration_data: null,
+      subscribe_status: '',
       is_active: false,
     },
   },
@@ -33,18 +36,24 @@ export default createStore({
     },
     SET_USER: (state, data) => {
       state.user.id = data.id
-      state.user.username = data.username
+      state.user.telegram_id = data.telegram_id
       state.user.email = data.email
       state.user.phone = data.phone
       state.user.token = data.token
+      state.user.telegram_name = data.telegram_name
+      state.user.registration_data = data.registration_data
+      state.user.subscribe_status = data.subscribe_status
       state.user.is_active = data.is_active
     },
     SET_USER_DEFAULT: (state) => {
       state.user.id = null
-      state.user.username = null
+      state.user.telegram_id = null
       state.user.email = null
       state.user.phone = null
       state.user.token = null
+      state.user.telegram_name = null
+      state.user.registration_data = null
+      state.user.subscribe_status = ''
       state.user.is_active = false
     },
 
@@ -65,24 +74,38 @@ export default createStore({
           context.commit('SET_STATUS', 'Перенаправление в личный кабинет...')
           let token = response.data.auth_token
           axios.get("http://localhost:8000/auth/users/me", {
-                headers: {"Authorization": "token " + token},
+                headers: {"Authorization": `token ${token}`},
                 data: {
                     username: account.username,
                     password: account.password
                 }
           }).then(function (response) {
             let id = response.data.id;
-            let username = response.data.username;
+            let telegram_id = response.data.username;
             let email = response.data.email;
             let phone = response.data.phone;
+            axios.get(`http://localhost:8000/api/subscribers/${telegram_id}/get_detail_info/`,{
+                headers: {"Authorization": `token ${token}`},
+                data: {
+                    username: account.username,
+                    password: account.password
+                }
+          }).then(function (response) {
+            let telegram_name = response.data.name;
+            let registration_data = response.data.data;
+            let subscribe_status = response.data.status;
             context.commit('SET_USER', {
               'id': id,
-              'username': username,
+              'telegram_id': telegram_id,
               'email': email,
               'phone': phone,
               'token': token,
+              'telegram_name': telegram_name,
+              'registration_data': registration_data,
+              'subscribe_status': subscribe_status,
               'is_active': true
-            });
+            })
+          })
           }).catch(function (error) {
             console.log(error)
           })

@@ -1,7 +1,7 @@
 from rest_framework import status, viewsets
 from .serializers import SubscriberSerializer
 from .models import Subscriber
-from rest_framework.permissions import IsAdminUser, AllowAny
+from rest_framework.permissions import IsAdminUser, AllowAny, IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -12,7 +12,7 @@ class SubscribersViewSet(viewsets.ModelViewSet):
     queryset = Subscriber.objects.all()
     permission_classes = [AllowAny]
 
-    @action(detail=True)
+    @action(detail=True, permission_classes=[IsAuthenticated])
     def get_detail_info(self, request, pk=None):
         try:
             subscriber = Subscriber.objects.select_related().get(issubscribed__is_subscribed=True)

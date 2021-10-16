@@ -180,4 +180,4 @@ async def delete(call: CallbackQuery):
 @dp.callback_query_handler(text='registration-web')
 async def registration(call: CallbackQuery):
     await call.answer(cache_time=5)
-    await call.message.answer(f'Логин для регистрации: {call.from_user.id}', reply_markup=get_menu_keyboard())
+    await call.message.answer(f'Логин для регистрации: {call.from_user.id}', reply_markup=back_menu_keyboard)

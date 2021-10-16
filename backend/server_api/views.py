@@ -1,4 +1,4 @@
-from rest_framework import status, viewsets
+from rest_framework import viewsets
 from .serializers import SubscriberSerializer
 from .models import Subscriber
 from rest_framework.permissions import IsAdminUser, AllowAny, IsAuthenticated

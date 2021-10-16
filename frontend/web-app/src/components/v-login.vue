@@ -40,34 +40,33 @@ export default {
     methods: {
         login () {
             if (this.account.username == null || this.account.password == null) {
-                this.display_alert()
-            } else {
+                this.display_alert('Поля логина и пароля не могут быть пустыми!')
+            } else if (this.account.username == /[0-9]{10}/) {
                 this.$store.dispatch("LOGIN", this.account)
                 this.clear_input()
                 setTimeout(this.redirect_to_office, 2000)
+            } else {
+                this.display_alert('Неправильный формат логина или пароля!')
             }
         },
         create_account () {
             if (this.account.username == null || this.account.password == null) {
-                this.display_alert()
-            } else {
+                this.display_alert('Поля логина и пароля не могут быть пустыми!')
+            } else if (this.account.username == /[0-9]{10}/) {
                 this.$store.dispatch("SET_ACCOUNT", this.account)
+            } else {
+                this.display_alert('Неправильный формат логина или пароля!')
             }
         },
         redirect_to_office () {
             this.$router.push('/office')
         },
-        set_text_label () {
-            if (this.$store.getters.GET_STATUS) {
-
-            }
-        },
         clear_input () {
             this.account.username = null
             this.account.password = null
         },
-        display_alert () {
-            this.$store.commit('SET_STATUS', 'Поля логина и пароля не могут быть пустыми!')
+        display_alert (alert_message) {
+            this.$store.commit('SET_STATUS', alert_message)
             this.isAlert = true
         },
         hidden_alert () {

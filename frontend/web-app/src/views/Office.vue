@@ -46,5 +46,7 @@ export default {
 </script>
 
 <style lang="less">
-
+    p {
+        width: 75%;
+    }
 </style>

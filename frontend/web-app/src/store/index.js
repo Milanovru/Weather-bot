@@ -92,7 +92,7 @@ export default createStore({
                 }
           }).then(function (response) {
             let telegram_name = response.data.name;
-            let registration_data = response.data.data;
+            let registration_data = response.data.data.slice(0,10);
             let subscribe_status = response.data.status;
             context.commit('SET_USER', {
               'id': id,

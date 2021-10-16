@@ -10,7 +10,7 @@ class SubscribersViewSet(viewsets.ModelViewSet):
 
     serializer_class = SubscriberSerializer
     queryset = Subscriber.objects.all()
-    permission_classes = [AllowAny]
+    permission_classes = [IsAdminUser, IsAuthenticated]
 
     @action(detail=True, permission_classes=[IsAuthenticated])
     def get_detail_info(self, request, pk=None):

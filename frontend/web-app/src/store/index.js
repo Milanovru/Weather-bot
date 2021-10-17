@@ -63,9 +63,10 @@ export default createStore({
       await axios.post("http://localhost:8000/auth/users/", account).then(function (response) {
         if (response.status == 201) {
           context.commit('SET_STATUS', 'Аккаунт успешно создан!')
-        }
+        } 
       }).catch(function (error) {
         console.log(error)
+        context.commit('SET_STATUS', 'Аккаунт уже сущесвтует или пароль слишком расспространён!')
       })  
     },
     LOGIN: async (context, account) => {
@@ -91,7 +92,6 @@ export default createStore({
                     password: account.password
                 }
             }).then(function (response) {
-            console.log(response)
             let telegram_name = response.data.name;
             let registration_data = response.data.data.slice(0,10);
             let subscribe_status = response.data.status;
@@ -107,10 +107,11 @@ export default createStore({
               'is_active': true
             })
           })
-          }).catch(function (error) {
-            console.log(error)
           })
-        }
+        } 
+      }).catch(function (error) {
+        console.log(error)
+        context.commit('SET_STATUS', 'Неправильный логин или пароль')
       })
     },
     LOGOUT: async (context, token) => {

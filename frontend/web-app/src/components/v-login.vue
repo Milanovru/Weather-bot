@@ -6,14 +6,14 @@
             type='text' 
             placeholder="Введите логин" 
             class="form-item item1" 
-            :class="{alert: isAlert}"
+            :class="{alert: UsernameIsAlert}"
             @click="hidden_alert()"
             />
         <input v-model.lazy="account.password" 
             type='password' 
             placeholder="Введите пароль" 
             class="form-item item1" 
-            :class="{alert: isAlert}"
+            :class="{alert: PasswordIsAlert}"
             @click="hidden_alert()"
         />
         <button @click="login()" class="btn btn-submit">
@@ -33,29 +33,29 @@ export default {
                 username: null,
                 password: null,
             },
-            label: null,
-            isAlert: false,
+            UsernameIsAlert: false,
+            PasswordIsAlert: false,
         }
     },
     methods: {
         login () {
             if (this.account.username == null || this.account.password == null) {
-                this.display_alert('Поля логина и пароля не могут быть пустыми!')
-            } else if (this.account.username == /[0-9]{10}/) {
+                this.display_alert('Поля логина и пароля не могут быть пустыми!', 'username and password')
+            } else {
                 this.$store.dispatch("LOGIN", this.account)
                 this.clear_input()
                 setTimeout(this.redirect_to_office, 2000)
-            } else {
-                this.display_alert('Неправильный формат логина или пароля!')
             }
         },
         create_account () {
             if (this.account.username == null || this.account.password == null) {
-                this.display_alert('Поля логина и пароля не могут быть пустыми!')
+                this.display_alert('Поля логина и пароля не могут быть пустыми!', 'username and password')
             } else if (this.account.username == /[0-9]{10}/) {
-                this.$store.dispatch("SET_ACCOUNT", this.account)
+                this.display_alert('Неправильный формат логина!', 'username')
+            } else if (this.account.password == /[^\s]{8,20}/) {
+                this.display_alert('Пароль не может быть числовым и меньше 8 символов!', 'password')
             } else {
-                this.display_alert('Неправильный формат логина или пароля!')
+                this.$store.dispatch("SET_ACCOUNT", this.account)
             }
         },
         redirect_to_office () {
@@ -65,13 +65,21 @@ export default {
             this.account.username = null
             this.account.password = null
         },
-        display_alert (alert_message) {
+        display_alert (alert_message, form) {
             this.$store.commit('SET_STATUS', alert_message)
-            this.isAlert = true
+            if (form == 'username') {
+                this.UsernameIsAlert = true
+            } else if (form == 'password') {
+                this.PasswordIsAlert = true
+            } else {
+                this.UsernameIsAlert = true
+                this.PasswordIsAlert = true
+            }
         },
         hidden_alert () {
             this.$store.commit('SET_STATUS_DEFAULT')
-            this.isAlert = false
+            this.UsernameIsAlert = false
+            this.PasswordIsAlert = false
         }
     }    
 }
